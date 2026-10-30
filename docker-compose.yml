@@ -1,0 +1,162 @@
+# Fragrantica Insights — pilha completa.
+#
+#   docker compose up -d --build                    # kafka, postgres, consumer, app e coletor diário
+#                                                   # (o coletor monta o catálogo sozinho se o banco estiver vazio)
+#   docker compose --profile demo run --rm demo     # carrega os dados FICTÍCIOS de exemplo
+#   docker compose --profile carga run --rm carga   # opcional: aproveita os CSVs do Colab em data/input
+#   docker compose --profile observabilidade up -d kafka-ui   # painel do Kafka em :8080
+
+x-app-env: &app-env
+  env_file: .env
+  environment:
+    KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    DATABASE_URL: postgresql://fragrantica:fragrantica@postgres:5432/fragrantica
+    # Ollama rodando na sua máquina (Mac/Windows); com o serviço `ollama` abaixo, use http://ollama:11434
+    OLLAMA_URL: ${OLLAMA_URL_DOCKER:-http://host.docker.internal:11434}
+
+services:
+  kafka:
+    image: apache/kafka:3.8.0
+    container_name: fi-kafka
+    ports:
+      - "29092:29092"          # acesso a partir da sua máquina (scripts locais)
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller       # modo KRaft: sem ZooKeeper
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,EXTERNAL://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_LOG_RETENTION_HOURS: 168               # mensagens ficam 7 dias no tópico
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9092 > /dev/null 2>&1"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 20s
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: fi-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: fragrantica
+      POSTGRES_PASSWORD: fragrantica
+      POSTGRES_DB: fragrantica
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d:ro       # cria as tabelas na primeira subida
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fragrantica -d fragrantica"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  consumer:
+    build: .
+    container_name: fi-consumer
+    command: ["python", "-m", "fraginsights.consumer"]
+    <<: *app-env
+    depends_on:
+      kafka: { condition: service_healthy }
+      postgres: { condition: service_healthy }
+    restart: unless-stopped
+
+  app:
+    build: .
+    container_name: fi-app
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data/input:/dados:ro                     # CSVs para a carga em lote (make lote-analisar)
+    <<: *app-env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"      # no Linux, faz host.docker.internal apontar para a máquina
+    depends_on:
+      postgres: { condition: service_healthy }
+      kafka: { condition: service_healthy }      # o app publica pedidos de coleta
+    restart: unless-stopped
+
+  analista:                                      # gera as análises de IA sozinho e cede a vez ao app
+    build: .
+    container_name: fi-analista
+    command: ["python", "-m", "fraginsights.analista"]
+    <<: *app-env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres: { condition: service_healthy }
+    restart: unless-stopped
+
+  coletor:
+    build:
+      context: .
+      dockerfile: Dockerfile.coleta
+    platform: linux/amd64
+    container_name: fi-coletor
+    command: ["python", "-m", "fraginsights.producer", "agendado"]
+    volumes:
+      - ./data/input:/dados:ro                     # CSVs para a carga em lote (make lote-coletar)
+    shm_size: 2gb                                  # o Chrome precisa de memória compartilhada
+    <<: *app-env
+    depends_on:
+      kafka: { condition: service_healthy }
+      postgres: { condition: service_healthy }
+      consumer: { condition: service_started }
+    restart: unless-stopped
+
+  # ---- tarefas avulsas (perfis) ----------------------------------------------
+  carga:
+    profiles: ["carga"]
+    build: .
+    command: ["python", "-m", "fraginsights.producer", "carga-csv", "--pasta", "/dados"]
+    <<: *app-env
+    volumes:
+      - ./data/input:/dados:ro
+    depends_on:
+      kafka: { condition: service_healthy }
+
+  demo:
+    profiles: ["demo"]
+    build: .
+    command: ["python", "-m", "fraginsights.producer", "carga-csv", "--pasta", "/app/data/exemplo", "--fonte", "exemplo"]
+    <<: *app-env
+    depends_on:
+      kafka: { condition: service_healthy }
+
+  # Alternativa ao Ollama instalado na máquina (Linux/Windows; no Mac roda sem GPU e fica lento):
+  #   docker compose --profile ollama up -d ollama
+  #   docker compose exec ollama ollama pull qwen2.5:7b
+  #   e no .env: OLLAMA_URL_DOCKER=http://ollama:11434
+  ollama:
+    profiles: ["ollama"]
+    image: ollama/ollama:latest
+    container_name: fi-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+
+  kafka-ui:
+    profiles: ["observabilidade"]
+    image: provectuslabs/kafka-ui:latest
+    container_name: fi-kafka-ui
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    depends_on:
+      kafka: { condition: service_healthy }
+
+volumes:
+  pgdata:
+  ollama:

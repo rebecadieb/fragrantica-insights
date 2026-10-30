@@ -1,0 +1,4 @@
+# Somente para o serviço de coleta (scraper)
+-r requirements.txt
+seleniumbase>=4.30
+pyvirtualdisplay>=3.0

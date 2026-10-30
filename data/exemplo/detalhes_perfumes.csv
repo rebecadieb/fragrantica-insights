@@ -1,0 +1,4 @@
+id_perfume,designer,perfume,genero,ano,nota_media,votos,reviews,perfumistas,acordes,notas_topo,notas_coracao,notas_base,link_perfume
+900001,Casa Fictícia,Brisa de Teste,compartilhável,2021,3.9,1200,12,Perfumista Fictício,cítrico; aromático; fresco,Bergamota; Limão,Lavanda; Gerânio,Almíscar; Cedro,https://exemplo.invalid/perfume/900001.html
+900002,Casa Fictícia,Noite Exemplar,masculino,2019,4.2,3400,12,Perfumista Fictício,âmbar; especiado; amadeirado,Cardamomo; Pimenta rosa,Canela; Tabaco,Baunilha; Âmbar,https://exemplo.invalid/perfume/900002.html
+900003,Ateliê Demonstrativo,Flor Hipotética,feminino,2023,3.6,800,12,Perfumista Fictício,floral; doce; frutado,Pera; Framboesa,Rosa; Jasmim,Baunilha; Patchouli,https://exemplo.invalid/perfume/900003.html

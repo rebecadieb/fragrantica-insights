@@ -1,0 +1,10 @@
+[project]
+name = "fraginsights"
+version = "1.0.0"
+description = "Pipeline de reviews do Fragrantica (Kafka + PostgreSQL) com análise por GenAI em Streamlit"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]
+addopts = "-q"

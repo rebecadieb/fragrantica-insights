@@ -1,0 +1,37 @@
+id_perfume,designer,perfume,review_id,ordem,autor,data_texto,data_aprox,tags,texto
+900001,Casa Fictícia,Brisa de Teste,1001,1,pessoa_exemplo_0,a day ago,,,"Perfeito para o calor e para o trabalho, muito versátil. A fixação é fraca, some em 2 horas."
+900001,Casa Fictícia,Brisa de Teste,1002,2,pessoa_exemplo_1,02/11/26 11:01,,,"Cheiro delicioso de limão, mas projeção baixa, fica colado na pele."
+900001,Casa Fictícia,Brisa de Teste,1003,3,pessoa_exemplo_2,03/12/26 12:02,,,"Vale cada centavo, preço ótimo para o dia a dia no verão."
+900001,Casa Fictícia,Brisa de Teste,1004,4,pessoa_exemplo_3,04/10/26 13:03,,,"Fixação de umas 3 horas, nada de mais. O cheiro é gostoso e limpo."
+900001,Casa Fictícia,Brisa de Teste,1005,5,pessoa_exemplo_4,05/11/26 14:04,,,"Lembra muito outro cítrico famoso, nada original, mas é agradável."
+900001,Casa Fictícia,Brisa de Teste,1006,6,pessoa_exemplo_0,06/12/26 15:05,,,Uso no trabalho e sempre me elogiam pelo cheiro fresco.
+900001,Casa Fictícia,Brisa de Teste,1007,7,pessoa_exemplo_1,07/10/26 16:00,,,Para quem gosta de perfumes leves e discretos é ótimo.
+900001,Casa Fictícia,Brisa de Teste,1008,8,pessoa_exemplo_2,08/11/26 17:01,,,"Evapora rápido, precisei reaplicar duas vezes no dia."
+900001,Casa Fictícia,Brisa de Teste,1009,9,pessoa_exemplo_3,09/12/26 18:02,,,"Excelente custo-benefício, rende bastante."
+900001,Casa Fictícia,Brisa de Teste,1010,10,pessoa_exemplo_4,01/10/26 10:03,,,Bom
+900001,Casa Fictícia,Brisa de Teste,1011,11,pessoa_exemplo_0,02/11/26 11:04,,,"Muito versátil, uso de manhã e no fim de semana. Projeção discreta."
+900001,Casa Fictícia,Brisa de Teste,1012,12,pessoa_exemplo_1,03/12/26 12:05,,,"Cheiro maravilhoso, mas a duração é curta."
+900002,Casa Fictícia,Noite Exemplar,1013,1,pessoa_exemplo_0,a day ago,,,"Uma bomba de fixação, dura o dia todo e ainda sinto na roupa no dia seguinte."
+900002,Casa Fictícia,Noite Exemplar,1014,2,pessoa_exemplo_1,02/11/26 11:01,,,"Projeção absurda, deixa rastro no elevador. Ideal para noites frias."
+900002,Casa Fictícia,Noite Exemplar,1015,3,pessoa_exemplo_2,03/12/26 12:02,,,"Cheiro delicioso de canela com baunilha, muito aconchegante no inverno."
+900002,Casa Fictícia,Noite Exemplar,1016,4,pessoa_exemplo_3,04/10/26 13:03,,,"Enjoativo no calor, não é versátil, só funciona à noite."
+900002,Casa Fictícia,Noite Exemplar,1017,5,pessoa_exemplo_4,05/11/26 14:04,,,Sempre recebo elogios quando uso em encontros.
+900002,Casa Fictícia,Noite Exemplar,1018,6,pessoa_exemplo_0,06/12/26 15:05,,,"Caro, mas vale a pena pela fixação de mais de 10 horas."
+900002,Casa Fictícia,Noite Exemplar,1019,7,pessoa_exemplo_1,07/10/26 16:00,,,Para quem gosta de perfumes doces e marcantes é perfeito.
+900002,Casa Fictícia,Noite Exemplar,1020,8,pessoa_exemplo_2,08/11/26 17:01,,,"Nunca senti nada igual, muito original e diferente dos outros orientais."
+900002,Casa Fictícia,Noite Exemplar,1021,9,pessoa_exemplo_3,09/12/26 18:02,,,"Projeção forte nas primeiras horas, depois fica mais perto da pele."
+900002,Casa Fictícia,Noite Exemplar,1022,10,pessoa_exemplo_4,01/10/26 10:03,,,"Uso noturno, em balada ou jantar. No trabalho fica exagerado."
+900002,Casa Fictícia,Noite Exemplar,1023,11,pessoa_exemplo_0,02/11/26 11:04,,,"A fixação é excelente, longa duração mesmo."
+900002,Casa Fictícia,Noite Exemplar,1024,12,pessoa_exemplo_1,03/12/26 12:05,,,"Preço alto pelo tamanho do frasco, custo-benefício ruim."
+900003,Ateliê Demonstrativo,Flor Hipotética,1025,1,pessoa_exemplo_0,a day ago,,,"Cheiro lindo de rosa com pera, muito feminino e delicado."
+900003,Ateliê Demonstrativo,Flor Hipotética,1026,2,pessoa_exemplo_1,02/11/26 11:01,,,"Fixação fraca, some em 3 horas na minha pele."
+900003,Ateliê Demonstrativo,Flor Hipotética,1027,3,pessoa_exemplo_2,03/12/26 12:02,,,"Projeção moderada, quem está perto percebe."
+900003,Ateliê Demonstrativo,Flor Hipotética,1028,4,pessoa_exemplo_3,04/10/26 13:03,,,"Doce demais para mim, achei enjoativo e um pouco sintético."
+900003,Ateliê Demonstrativo,Flor Hipotética,1029,5,pessoa_exemplo_4,05/11/26 14:04,,,Ótimo para o dia a dia e para o trabalho na primavera.
+900003,Ateliê Demonstrativo,Flor Hipotética,1030,6,pessoa_exemplo_0,06/12/26 15:05,,,"Parecido com vários florais frutados do mercado, genérico."
+900003,Ateliê Demonstrativo,Flor Hipotética,1031,7,pessoa_exemplo_1,07/10/26 16:00,,,Recebo elogios das amigas sempre que uso.
+900003,Ateliê Demonstrativo,Flor Hipotética,1032,8,pessoa_exemplo_2,08/11/26 17:01,,,"Preço justo, vale a pena."
+900003,Ateliê Demonstrativo,Flor Hipotética,1033,9,pessoa_exemplo_3,09/12/26 18:02,,,Para quem gosta de florais doces e jovens é uma boa escolha.
+900003,Ateliê Demonstrativo,Flor Hipotética,1034,10,pessoa_exemplo_4,01/10/26 10:03,,,"Dura umas 5 horas, fixação mediana."
+900003,Ateliê Demonstrativo,Flor Hipotética,1035,11,pessoa_exemplo_0,02/11/26 11:04,,,"Lindo cheiro, mas nada original."
+900003,Ateliê Demonstrativo,Flor Hipotética,1036,12,pessoa_exemplo_1,03/12/26 12:05,,,"Uso de dia, no verão fica um pouco forte."
