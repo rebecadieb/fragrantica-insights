@@ -473,6 +473,14 @@ Todo conteúdo gerado traz o aviso de que foi produzido por IA, com o modelo, a 
 
 ---
 
+## Demonstração
+
+Coleta sob demanda e análise do Classique (Jean Paul Gaultier) a partir do link (vídeo acelerado):
+
+![Demonstração do app](docs/imagens/demonstracao.gif)
+
+---
+
 ## Configuração (.env)
 
 | Variável | Padrão | Para que serve |
