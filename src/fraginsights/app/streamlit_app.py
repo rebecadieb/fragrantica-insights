@@ -300,6 +300,11 @@ with aba_ia:
             nota_analista.empty()
         if analise:
             aviso.empty()
+            if coletar_antes:
+                # As reviews e a ficha acabaram de chegar, mas o cabeçalho já foi desenhado com os
+                # dados de antes da coleta ("Reviews no banco 0"). Recarrega a página: a análise
+                # recém-salva vem do banco, e o cabeçalho, a aba Reviews e a busca, atualizados.
+                st.rerun()
 
     if analise:
         r = db.para_json(analise["resultado"])
